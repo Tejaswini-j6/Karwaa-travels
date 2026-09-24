@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#faf7f2">
+  <dc-import name="Header" active="About Us" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+  <dc-import name="PageBanner" eyebrow="ABOUT US" title="Your Trust, Our Priority" crumb="About Us" sub="Karwaa Hospitality is a unit of MCS Associates — planning safe, comfortable and memorable journeys across India and beyond." src="img/hero-mountains.png" hint-size="100%,320px"></dc-import>
+
+  <section style="max-width:1280px;margin:0 auto;padding:60px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(28px,5vw,64px);align-items:center">
+    <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:14px">
+      <img src="img/tour.png" alt="Traveller in the mountains" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:18px;grid-row:span 2">
+      <img src="img/driver.png" alt="Karwaa driver" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px">
+      <img src="img/hotel.png" alt="Partner resort" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px">
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b"><span style="font-size:8px">▶</span>OUR STORY</div>
+      <h2 style="margin:14px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.12;color:#0e2340">Travel more, <span style="font-family:'Alex Brush',cursive;font-size:1.3em;color:#b07d2f">worry less</span></h2>
+      <p style="margin:18px 0 0;font-size:15px;line-height:1.75;color:#4a5566;text-wrap:pretty">We started Karwaa with a simple idea: every traveller deserves a driver they can trust and a trip that runs without surprises. Today we assign verified drivers, book premium and budget stays, and craft tour packages for families, couples and corporate groups.</p>
+      <p style="margin:14px 0 0;font-size:15px;line-height:1.75;color:#4a5566;text-wrap:pretty">Every booking is handled by a real person who stays with you from the first call to the drive home.</p>
+      <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+        <a href="Services.dc.html" style="height:48px;padding:0 26px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 6px 16px rgba(147,98,31,.28)">Our Services <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+        <a href="Contact.dc.html" style="height:48px;padding:0 24px;border-radius:999px;border:1px solid #d9c3a0;color:#a8742b;font-size:14px;font-weight:600;display:flex;align-items:center">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-top:1px solid #f2ece2;border-bottom:1px solid #f2ece2">
+    <div style="max-width:1280px;margin:0 auto;padding:44px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center">
+      <div><div style="font-family:'DM Serif Display',serif;font-size:44px;color:#a8742b">1000+</div><div style="font-size:14px;color:#4a5566">Happy travellers</div></div>
+      <div><div style="font-family:'DM Serif Display',serif;font-size:44px;color:#a8742b">150+</div><div style="font-size:14px;color:#4a5566">Verified drivers</div></div>
+      <div><div style="font-family:'DM Serif Display',serif;font-size:44px;color:#a8742b">2,000+</div><div style="font-size:14px;color:#4a5566">Partner hotels</div></div>
+      <div><div style="font-family:'DM Serif Display',serif;font-size:44px;color:#a8742b">24/7</div><div style="font-size:14px;color:#4a5566">Customer support</div></div>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:60px 28px 70px">
+    <div style="text-align:center">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">WHAT WE STAND FOR</div>
+      <h2 style="margin:12px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(28px,3vw,38px);color:#0e2340">Built on three promises</h2>
+    </div>
+    <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <div style="background:#fff;border:1px solid #f0e9dd;border-radius:18px;padding:28px"><span style="width:54px;height:54px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">verified_user</span></span><div style="margin-top:16px;font-size:18px;font-weight:600">Safety first</div><p style="margin:8px 0 0;font-size:14px;line-height:1.65;color:#4a5566">Every driver is police-verified, trained and rated after each trip.</p></div>
+      <div style="background:#fff;border:1px solid #f0e9dd;border-radius:18px;padding:28px"><span style="width:54px;height:54px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">payments</span></span><div style="margin-top:16px;font-size:18px;font-weight:600">Honest pricing</div><p style="margin:8px 0 0;font-size:14px;line-height:1.65;color:#4a5566">Clear quotes up front — no hidden charges added on the road.</p></div>
+      <div style="background:#fff;border:1px solid #f0e9dd;border-radius:18px;padding:28px"><span style="width:54px;height:54px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">favorite</span></span><div style="margin-top:16px;font-size:18px;font-weight:600">Personal care</div><p style="margin:8px 0 0;font-size:14px;line-height:1.65;color:#4a5566">One trip manager, reachable any time, for the whole journey.</p></div>
+    </div>
+  </section>
+  <dc-import name="Footer" hint-size="100%,150px"></dc-import>
+</div>
+</x-dc>
+</body>
+</html>

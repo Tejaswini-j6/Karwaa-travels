@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<script src="./data.js"></script>
+<style>
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#faf7f2">
+  <dc-import name="Header" active="Services" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+  <dc-import name="PageBanner" eyebrow="OUR SERVICES" title="Everything You Need for the Perfect Trip" crumb="Services" sub="From personal drivers to curated travel packages, we make your journey smooth, safe and memorable." src="img/hero-sunset.png" hint-size="100%,320px"></dc-import>
+
+  <section style="max-width:1280px;margin:0 auto;padding:48px 28px 64px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+        <a href="{{ s.href }}" style="display:flex;flex-direction:column;background:#fff;border-radius:16px;padding:10px 10px 22px;box-shadow:0 8px 26px rgba(20,35,60,.07);border:1px solid #f2ece2;color:inherit;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 18px 34px rgba(20,35,60,.12)">
+          <div style="position:relative;aspect-ratio:1.7/1;border-radius:10px;overflow:hidden"><img src="{{ s.src }}" alt="{{ s.title }}" style="width:100%;height:100%;object-fit:cover;display:block">
+            <span style="position:absolute;left:12px;bottom:-22px;width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(20,35,60,.12);display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:26px;color:#a8742b">{{ s.icon }}</span></span>
+          </div>
+          <div style="padding:34px 12px 0;display:flex;flex-direction:column;flex:1">
+            <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#0e2340">{{ s.title }}</div>
+            <div style="margin-top:4px;font-size:12px;font-weight:600;color:#a8742b">{{ s.sub }}</div>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.65;color:#4a5566;flex:1">{{ s.desc }}</p>
+            <span style="margin-top:16px;font-size:13px;font-weight:600;color:#a8742b;display:flex;align-items:center;gap:8px">Learn More <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-top:1px solid #f2ece2;border-bottom:1px solid #f2ece2">
+    <div style="max-width:1280px;margin:0 auto;padding:56px 28px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">HOW IT WORKS</div>
+      <h2 style="margin:12px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(28px,3vw,38px);color:#0e2340">Booked in four simple steps</h2>
+      <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px">
+        <div style="padding:22px;border-radius:16px;background:#faf7f2"><div style="font-family:'DM Serif Display',serif;font-size:34px;color:#c99a47">01</div><div style="margin-top:8px;font-size:16px;font-weight:600">Share your plan</div><p style="margin:6px 0 0;font-size:13.5px;line-height:1.6;color:#4a5566">Send a booking request or call us with your dates and needs.</p></div>
+        <div style="padding:22px;border-radius:16px;background:#faf7f2"><div style="font-family:'DM Serif Display',serif;font-size:34px;color:#c99a47">02</div><div style="margin-top:8px;font-size:16px;font-weight:600">Get a quote</div><p style="margin:6px 0 0;font-size:13.5px;line-height:1.6;color:#4a5566">A travel expert calls back within 2 hours with options.</p></div>
+        <div style="padding:22px;border-radius:16px;background:#faf7f2"><div style="font-family:'DM Serif Display',serif;font-size:34px;color:#c99a47">03</div><div style="margin-top:8px;font-size:16px;font-weight:600">Confirm & pay</div><p style="margin:6px 0 0;font-size:13.5px;line-height:1.6;color:#4a5566">Confirm with a small advance — UPI, card or bank transfer.</p></div>
+        <div style="padding:22px;border-radius:16px;background:#faf7f2"><div style="font-family:'DM Serif Display',serif;font-size:34px;color:#c99a47">04</div><div style="margin-top:8px;font-size:16px;font-weight:600">Travel worry-free</div><p style="margin:6px 0 0;font-size:13.5px;line-height:1.6;color:#4a5566">Driver details and vouchers arrive on WhatsApp.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:44px 28px">
+    <div style="border-radius:18px;background:linear-gradient(90deg,#132640,#1d3150 55%,#5a4632);padding:30px clamp(20px,4vw,50px);display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px"><div style="font-family:'DM Serif Display',serif;font-size:26px;color:#fff">Not sure what you need?</div><div style="font-size:14px;color:#e3e7ee;margin-top:4px">Tell us about your trip and we will put it together for you.</div></div>
+      <a href="Booking.dc.html?service=Customized%20Trip" style="height:46px;padding:0 26px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px">Plan My Trip <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+      <a href="Contact.dc.html" style="height:46px;padding:0 24px;border-radius:999px;border:1px solid rgba(255,255,255,.8);color:#fff;font-size:14px;font-weight:500;display:flex;align-items:center">Contact Us</a>
+    </div>
+  </section>
+  <dc-import name="Footer" hint-size="100%,150px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { if (!window.KD) this.t = setInterval(() => { if (window.KD) { clearInterval(this.t); this.forceUpdate(); } }, 30); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const D = window.KD; if (!D) return {};
+    return { services: D.services.map(s => ({ ...s, href: D.url('Service', { s: s.key }) })) };
+  }
+}
+</script>
+</body>
+</html>

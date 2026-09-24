@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<script src="./data.js"></script>
+<style>
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+button{font-family:inherit}
+@keyframes kwFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#faf7f2">
+  <dc-import name="Header" active="{{ activeNav }}" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+
+  <section style="max-width:1280px;margin:0 auto;padding:22px 28px 0">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4a5566">
+      <a href="Karwaa Website.dc.html">Home</a><span class="material-symbols-outlined" style="font-size:14px">chevron_right</span>
+      <a href="Services.dc.html">Services</a><span class="material-symbols-outlined" style="font-size:14px">chevron_right</span><span>{{ s.title }}</span>
+    </div>
+    <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(24px,4vw,56px);align-items:center">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:52px;height:52px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">{{ s.icon }}</span></span><span style="font-size:12px;font-weight:700;letter-spacing:1.6px;color:#a8742b">{{ s.sub }}</span></div>
+        <h1 style="margin:18px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(38px,4.6vw,58px);line-height:1.04;color:#0e2340">{{ s.title }}</h1>
+        <p style="margin:16px 0 0;font-size:16px;line-height:1.7;color:#2c3a4d;max-width:500px;text-wrap:pretty">{{ s.desc }}</p>
+        <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          <sc-for list="{{ s.points }}" as="pt" hint-placeholder-count="4"><div style="display:flex;gap:10px;font-size:14px"><span class="material-symbols-outlined" style="font-size:20px;color:#a8742b">check_circle</span>{{ pt }}</div></sc-for>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="{{ bookHref }}" style="height:50px;padding:0 28px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 6px 16px rgba(147,98,31,.28)">Book {{ s.title }} <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+          <sc-if value="{{ isTour }}"><a href="Packages.dc.html" style="height:50px;padding:0 24px;border-radius:999px;border:1px solid #d9c3a0;color:#a8742b;font-size:14px;font-weight:600;display:flex;align-items:center">View Packages</a></sc-if>
+          <a href="tel:+919311033931" style="height:50px;padding:0 24px;border-radius:999px;border:1px solid #d9c3a0;color:#a8742b;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px"><span class="material-symbols-outlined" style="font-size:18px">call</span>Call Now</a>
+        </div>
+      </div>
+      <div style="border-radius:22px;overflow:hidden;aspect-ratio:1.35/1;box-shadow:0 20px 46px rgba(20,35,60,.14)"><img src="{{ s.src }}" alt="{{ s.title }}" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:60px 28px 20px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">PRICING</div>
+    <h2 style="margin:12px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(28px,3vw,38px);color:#0e2340">Simple, transparent rates</h2>
+    <div style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+      <sc-for list="{{ plans }}" as="pl" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid {{ pl.border }};border-radius:18px;padding:24px;display:flex;flex-direction:column;box-shadow:0 8px 24px rgba(20,35,60,.06)">
+          <div style="font-size:15px;font-weight:600;color:#1b2a3d">{{ pl.name }}</div>
+          <div style="margin-top:10px;font-family:'DM Serif Display',serif;font-size:32px;color:#0e2340">{{ pl.price }}</div>
+          <div style="font-size:12px;color:#7a8594">{{ pl.unit }}</div>
+          <a href="{{ pl.href }}" style="margin-top:20px;height:44px;border-radius:999px;background:{{ pl.btnBg }};color:{{ pl.btnColor }};border:1px solid #d9c3a0;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px">Select <span class="material-symbols-outlined" style="font-size:17px">arrow_forward</span></a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:900px;margin:0 auto;padding:50px 28px 64px">
+    <h2 style="margin:0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(26px,2.6vw,34px);color:#0e2340;text-align:center">Frequently asked questions</h2>
+    <div style="margin-top:22px;background:#fff;border:1px solid #f0e9dd;border-radius:18px;padding:6px 24px">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="3">
+        <div style="border-bottom:{{ f.border }}">
+          <button onClick="{{ f.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;border:none;background:none;cursor:pointer;text-align:left;font-size:15px;font-weight:600;color:#0e2340">{{ f.q }}<span class="material-symbols-outlined" style="font-size:20px;color:#a8742b">{{ f.icon }}</span></button>
+          <sc-if value="{{ f.open }}"><p style="margin:0 0 18px;font-size:14px;line-height:1.65;color:#4a5566;animation:kwFade .25s ease">{{ f.a }}</p></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-top:1px solid #f2ece2">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 28px 56px">
+      <div style="font-size:13px;font-weight:600;color:#4a5566">Other services</div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ others }}" as="o" hint-placeholder-count="5">
+          <a href="{{ o.href }}" style="display:flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;border:1px solid #eadfcd;background:#faf7f2;color:#1b2a3d;font-size:13px;font-weight:500" style-hover="border-color:#a8742b;color:#a8742b"><span class="material-symbols-outlined" style="font-size:18px;color:#a8742b">{{ o.icon }}</span>{{ o.title }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <dc-import name="Footer" hint-size="100%,150px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: { 0: true } };
+  componentDidMount() { if (!window.KD) this.t = setInterval(() => { if (window.KD) { clearInterval(this.t); this.forceUpdate(); } }, 30); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const D = window.KD; if (!D) return { s: {} };
+    const s = D.services.find(x => x.key === D.q('s')) || D.services[0];
+    return {
+      s, activeNav: s.key === 'driver' ? 'Driver Assign' : 'Services', isTour: s.key === 'tour',
+      bookHref: D.url('Booking', { service: s.service }),
+      plans: s.plans.map(([name, price, unit], i) => ({ name, unit, price: /^\d/.test(price) ? '₹ ' + price : price, border: i === 1 ? '#c99a47' : '#f0e9dd',
+        btnBg: i === 1 ? '#a8742b' : '#fff', btnColor: i === 1 ? '#fff' : '#a8742b', href: D.url('Booking', { service: s.service, plan: name }) })),
+      faqs: s.faqs.map(([q, a], i) => ({ q, a, open: !!this.state.open[i], icon: this.state.open[i] ? 'remove' : 'add', border: i === s.faqs.length - 1 ? 'none' : '1px solid #f2ece2',
+        toggle: () => this.setState(st => ({ open: { ...st.open, [i]: !st.open[i] } })) })),
+      others: D.services.filter(x => x.key !== s.key).map(o => ({ ...o, href: D.url('Service', { s: o.key }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

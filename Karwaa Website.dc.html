@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+input,select,textarea,button{font-family:inherit}
+input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
+@keyframes kwFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#faf7f2;overflow-x:hidden">
+
+<dc-import name="Header" active="Home" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+
+<section id="home" data-screen-label="Hero" style="position:relative;min-height:{{ heroMinH }};background:linear-gradient(170deg,#e9f2f7 0%,#f4f1ea 55%,#f8f1e4 100%);overflow:hidden;border-bottom-left-radius:50% 26px;border-bottom-right-radius:50% 26px">
+  <sc-for list="{{ slides }}" as="s" hint-placeholder-count="1">
+    <div style="position:absolute;top:0;right:0;width:{{ heroImgW }};height:{{ heroImgH }};opacity:{{ s.op }};transition:opacity .9s ease;-webkit-mask-image:{{ heroMask }};mask-image:{{ heroMask }};pointer-events:{{ s.pe }}">
+      <image-slot id="{{ s.id }}" shape="rect" src="{{ s.src }}" placeholder="{{ s.ph }}"></image-slot>
+    </div>
+  </sc-for>
+  <div style="position:relative;max-width:1280px;margin:0 auto;padding:{{ heroPad }};pointer-events:none">
+    <div style="max-width:600px;pointer-events:auto">
+      <div style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:600;letter-spacing:2.4px;color:#1b2a3d;flex-wrap:wrap">
+        <span style="color:#a8742b">EXPLORE</span><span style="width:4px;height:4px;border-radius:50%;background:#1b2a3d"></span><span>EXPERIENCE</span><span style="width:4px;height:4px;border-radius:50%;background:#1b2a3d"></span><span>CREATE MEMORIES</span>
+      </div>
+      <div key="{{ slideKey }}" style="animation:kwFade .7s ease">
+        <h1 style="margin:22px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(40px,5.2vw,66px);line-height:1;color:#0e2340;letter-spacing:-.5px">{{ slideT1 }}</h1>
+        <div style="font-family:'Alex Brush',cursive;font-size:clamp(56px,7.4vw,96px);line-height:1;color:#b07d2f;margin:6px 0 0 -4px">{{ slideT2 }}</div>
+        <p style="margin:26px 0 0;font-size:clamp(15px,1.2vw,17px);line-height:1.6;color:#2c3a4d;max-width:470px;text-wrap:pretty">{{ slideP }}</p>
+      </div>
+
+      <form onSubmit="{{ onSearch }}" style="margin-top:34px;background:#fff;border-radius:20px;box-shadow:0 18px 40px rgba(20,35,60,.14);padding:10px;display:grid;grid-template-columns:{{ searchCols }};gap:4px;align-items:stretch;width:{{ formW }};max-width:{{ formMaxW }};position:relative">
+        <div style="position:relative;display:flex;align-items:center;gap:10px;padding:8px 12px;min-width:0;border-right:{{ fieldDivider }};border-bottom:{{ fieldDividerB }}">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#a8742b;flex-shrink:0">location_on</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;font-weight:600;color:#1b2a3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Where are you going?</div>
+            <input value="{{ dest }}" onChange="{{ onDest }}" onFocus="{{ openDest }}" onBlur="{{ closeDestLater }}" placeholder="Destination / City" style="width:100%;min-width:0;text-overflow:ellipsis;border:none;outline:none;padding:3px 0 0;font-size:12px;color:#1b2a3d;background:transparent">
+          </div>
+          <span class="material-symbols-outlined" style="font-size:18px;color:#9aa3ae;flex-shrink:0">expand_more</span>
+          <sc-if value="{{ destOpen }}">
+            <div style="position:absolute;top:calc(100% + 10px);left:0;width:250px;background:#fff;border-radius:14px;box-shadow:0 16px 36px rgba(20,35,60,.16);padding:8px;z-index:20;animation:kwFade .2s ease">
+              <sc-for list="{{ destOptions }}" as="d">
+                <button type="button" onMouseDown="{{ d.pick }}" style="width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border:none;background:transparent;border-radius:10px;cursor:pointer;text-align:left;font-size:13px;color:#1b2a3d" style-hover="background:#f8f2e7"><span class="material-symbols-outlined" style="font-size:17px;color:#a8742b">near_me</span>{{ d.name }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;min-width:0;border-right:{{ fieldDivider }};border-bottom:{{ fieldDividerB }}">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#a8742b;flex-shrink:0">calendar_month</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;font-weight:600;color:#1b2a3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Check In - Check Out</div>
+            <div style="display:flex;gap:6px;align-items:center;min-width:0">
+              <input type="date" value="{{ checkIn }}" min="{{ today }}" max="{{ maxDate }}" onChange="{{ onCheckIn }}" aria-label="Check in" style="flex:1 1 0;width:0;min-width:0;border:none;outline:none;padding:3px 0 0;font-size:11px;color:{{ checkInColor }};background:transparent">
+              <span style="color:#c9bfae;font-size:11px;padding-top:3px;flex-shrink:0">–</span>
+              <input type="date" value="{{ checkOut }}" min="{{ checkOutMin }}" max="{{ maxDate }}" onChange="{{ onCheckOut }}" aria-label="Check out" style="flex:1 1 0;width:0;min-width:0;border:none;outline:none;padding:3px 0 0;font-size:11px;color:{{ checkOutColor }};background:transparent">
+            </div>
+          </div>
+        </div>
+        <div style="position:relative;display:flex;align-items:center;gap:10px;padding:8px 12px;min-width:0;cursor:pointer" onClick="{{ toggleTrav }}">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#a8742b;flex-shrink:0">person</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;font-weight:600;color:#1b2a3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Travellers</div>
+            <div style="font-size:12px;color:#7a8594;padding-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ travLabel }}</div>
+          </div>
+          <span class="material-symbols-outlined" style="font-size:18px;color:#9aa3ae;flex-shrink:0">expand_more</span>
+        </div>
+        <button type="submit" style="grid-column:{{ btnSpan }};height:48px;align-self:center;padding:0 24px;white-space:nowrap;border:none;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 6px 16px rgba(147,98,31,.3)" style-hover="filter:brightness(1.08)">Search <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></button>
+        <sc-if value="{{ travOpen }}">
+          <div onClick="{{ stop }}" style="position:absolute;top:calc(100% + 10px);right:{{ travRight }};width:270px;background:#fff;border-radius:16px;box-shadow:0 16px 36px rgba(20,35,60,.18);padding:16px 18px;z-index:20;animation:kwFade .2s ease;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ counters }}" as="c">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div><div style="font-size:14px;font-weight:600;color:#1b2a3d">{{ c.label }}</div><div style="font-size:11px;color:#7a8594">{{ c.sub }}</div></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <button type="button" onClick="{{ c.dec }}" style="width:32px;height:32px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+                  <span style="width:18px;text-align:center;font-weight:600;font-size:14px">{{ c.val }}</span>
+                  <button type="button" onClick="{{ c.inc }}" style="width:32px;height:32px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+                </div>
+              </div>
+            </sc-for>
+            <button type="button" onClick="{{ toggleTrav }}" style="height:40px;border:none;border-radius:999px;background:#0e2340;color:#fff;font-size:13px;font-weight:600;cursor:pointer">Done</button>
+          </div>
+        </sc-if>
+      </form>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-top:26px">
+        <button onClick="{{ prevSlide }}" aria-label="Previous slide" style="width:36px;height:36px;border-radius:50%;border:1px solid #d9c3a0;background:rgba(255,255,255,.8);color:#a8742b;display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></button>
+        <div style="display:flex;gap:6px">
+          <sc-for list="{{ slides }}" as="s">
+            <button onClick="{{ s.go }}" aria-label="Go to slide" style="width:{{ s.dotW }};height:8px;border-radius:99px;border:none;background:{{ s.dotBg }};cursor:pointer;transition:all .3s;padding:0"></button>
+          </sc-for>
+        </div>
+        <button onClick="{{ nextSlide }}" aria-label="Next slide" style="width:36px;height:36px;border-radius:50%;border:1px solid #d9c3a0;background:rgba(255,255,255,.8);color:#a8742b;display:flex;align-items:center;justify-content:center;cursor:pointer"><span class="material-symbols-outlined" style="font-size:18px">chevron_right</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Quick services" style="max-width:1280px;margin:0 auto;padding:22px 28px 30px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+    <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+      <a href="{{ f.href }}" style="color:inherit;background:#fff;border:1px solid #f0e9dd;border-radius:14px;padding:22px 12px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;box-shadow:0 4px 14px rgba(20,35,60,.04);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 14px 28px rgba(20,35,60,.1)">
+        <span style="width:54px;height:54px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center;margin-bottom:10px"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">{{ f.icon }}</span></span>
+        <span style="font-size:14px;font-weight:500;color:#1b2a3d">{{ f.title }}</span>
+        <span style="font-size:11px;color:#8a93a0">{{ f.sub }}</span>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section id="services" data-screen-label="Services" style="background:#fff;border-top:1px solid #f2ece2;border-bottom:1px solid #f2ece2">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,5vw,72px) 28px;display:grid;grid-template-columns:{{ servicesCols }};gap:clamp(28px,4vw,48px);align-items:center">
+    <div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b"><span style="font-size:8px">▶</span>OUR SERVICES</div>
+      <h2 style="margin:14px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.12;color:#0e2340">Everything You Need for the Perfect Trip</h2>
+      <p style="margin:18px 0 0;font-size:15px;line-height:1.7;color:#4a5566;max-width:380px;text-wrap:pretty">From personal drivers to curated travel packages, we make your journey smooth, safe and memorable.</p>
+      <a href="Services.dc.html" style="margin-top:28px;height:48px;padding:0 26px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 6px 16px rgba(147,98,31,.28)" style-hover="filter:brightness(1.08)">Explore All Services <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:16px;padding:10px 10px 20px;box-shadow:0 8px 26px rgba(20,35,60,.08);border:1px solid #f2ece2;display:flex;flex-direction:column;transition:transform .25s" style-hover="transform:translateY(-4px)">
+          <div style="aspect-ratio:1.6/1;border-radius:10px;overflow:hidden"><image-slot id="{{ s.id }}" shape="rect" src="{{ s.src }}" placeholder="{{ s.title }}"></image-slot></div>
+          <div style="padding:16px 10px 0;display:flex;flex-direction:column;flex:1">
+            <div style="font-size:16px;font-weight:500;color:#1b2a3d">{{ s.title }}</div>
+            <div style="margin-top:8px;font-size:12.5px;line-height:1.6;color:#8a93a0;flex:1">{{ s.desc }}</div>
+            <a href="{{ s.href }}" style="margin-top:14px;color:#a8742b;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;align-self:flex-start" style-hover="gap:12px">{{ s.cta }} <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="packages" data-screen-label="Packages" style="max-width:1280px;margin:0 auto;padding:clamp(48px,5vw,64px) 28px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b"><span style="font-size:8px">▶</span>FEATURED PACKAGES</div>
+      <h2 style="margin:14px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.12;color:#0e2340">Popular Tour Packages</h2>
+      <p style="margin:10px 0 0;font-size:14px;color:#4a5566">{{ pkgSub }}</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button onClick="{{ pkgPrev }}" aria-label="Previous" style="width:38px;height:38px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></button>
+      <button onClick="{{ pkgNext }}" aria-label="Next" style="width:38px;height:38px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">chevron_right</span></button>
+      <a href="Packages.dc.html" style="font-size:13px;font-weight:500;color:#a8742b;display:flex;align-items:center;gap:8px">View All Packages <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+    </div>
+  </div>
+  <div ref="{{ pkgRef }}" style="margin-top:28px;display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 16px;scroll-behavior:smooth">
+    <sc-for list="{{ packages }}" as="p" hint-placeholder-count="5">
+      <a href="{{ p.href }}" style="display:block;color:inherit;flex:0 0 {{ pkgBasis }};scroll-snap-align:start;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(20,35,60,.08);border:1px solid #f2ece2;cursor:pointer;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 30px rgba(20,35,60,.12)">
+        <div style="position:relative;aspect-ratio:1.78/1">
+          <image-slot id="{{ p.id }}" shape="rect" src="{{ p.src }}" placeholder="{{ p.title }}"></image-slot>
+          <span style="position:absolute;top:8px;right:8px;background:#fff;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700;color:#a8742b;box-shadow:0 2px 8px rgba(0,0,0,.12);pointer-events:none">₹ {{ p.price }}</span>
+        </div>
+        <div style="padding:14px 14px 14px">
+          <div style="font-family:'DM Serif Display',serif;font-size:17px;color:#0e2340">{{ p.title }}</div>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:#7a8594;flex-wrap:wrap">
+            <span class="material-symbols-outlined" style="font-size:13px;color:#a8742b">bedtime</span>{{ p.dur }}<span style="color:#d5d9df">|</span>Hotels<span style="color:#d5d9df">|</span>Breakfast
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between">
+            <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#4a5566"><span class="material-symbols-outlined" style="font-size:14px;color:#a8742b">location_on</span>{{ p.loc }}</span>
+            <span style="width:28px;height:28px;border-radius:50%;background:#f8efe0;display:flex;align-items:center;justify-content:center;color:#a8742b"><span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></span>
+          </div>
+        </div>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section id="about" data-screen-label="Why choose us" style="position:relative;background:linear-gradient(180deg,#faf7f2,#f5efe5)">
+  <div style="position:absolute;left:0;top:0;width:{{ whyImgW }};height:100%;-webkit-mask-image:linear-gradient(to right,#000 40%,transparent);mask-image:linear-gradient(to right,#000 40%,transparent);opacity:.95">
+    <image-slot id="why" shape="rect" src="img/why.png" placeholder="Resort by water"></image-slot>
+  </div>
+  <div style="position:relative;max-width:1280px;margin:0 auto;padding:44px 28px 44px {{ whyPadL }};display:grid;grid-template-columns:{{ whyCols }};gap:32px;align-items:center">
+    <div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b"><span style="font-size:8px">▶</span>WHY CHOOSE US</div>
+      <h2 style="margin:12px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(28px,2.6vw,34px);color:#0e2340">Your Trust, Our Priority</h2>
+      <p style="margin:12px 0 0;font-size:14px;line-height:1.7;color:#2c3a4d;max-width:360px">We go the extra mile to make your travel experience safe, comfortable and memorable.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));row-gap:24px">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:6px 12px;border-left:{{ s.border }}">
+          <span style="width:52px;height:52px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(20,35,60,.06);display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:26px;color:#a8742b">{{ s.icon }}</span></span>
+          <span style="font-size:13px;line-height:1.45;color:#1b2a3d">{{ s.l1 }}<br>{{ s.l2 }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Testimonials" style="background:#f5efe5;padding:10px 28px 50px">
+  <div style="max-width:880px;margin:0 auto;background:#fff;border-radius:20px;padding:clamp(28px,4vw,44px);box-shadow:0 10px 30px rgba(20,35,60,.06);text-align:center;border:1px solid #efe6d6">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">TRAVELLER STORIES</div>
+    <div key="{{ tKey }}" style="animation:kwFade .6s ease">
+      <div style="margin-top:14px;color:#c99a47;font-size:16px;letter-spacing:3px">★★★★★</div>
+      <p style="margin:14px auto 0;font-family:'DM Serif Display',serif;font-size:clamp(19px,2vw,24px);line-height:1.45;color:#0e2340;max-width:680px;text-wrap:pretty">“{{ tQuote }}”</p>
+      <div style="margin-top:18px;font-size:14px;font-weight:600;color:#1b2a3d">{{ tName }}</div>
+      <div style="font-size:12px;color:#7a8594;margin-top:2px">{{ tTrip }}</div>
+    </div>
+    <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:22px">
+      <button onClick="{{ tPrev }}" aria-label="Previous review" style="width:34px;height:34px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></button>
+      <sc-for list="{{ tDots }}" as="d"><button onClick="{{ d.go }}" aria-label="Review" style="width:{{ d.w }};height:8px;border-radius:99px;border:none;padding:0;background:{{ d.bg }};cursor:pointer;transition:all .3s"></button></sc-for>
+      <button onClick="{{ tNext }}" aria-label="Next review" style="width:34px;height:34px;border-radius:50%;border:1px solid #e3d6c0;background:#fff;color:#a8742b;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">chevron_right</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="offers" data-screen-label="Special offers" style="background:#f5efe5;padding:0 28px 34px">
+  <div style="max-width:1224px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(90deg,#132640 0%,#1d3150 45%,#5a4632 100%)">
+    <div style="position:absolute;right:0;top:0;bottom:0;width:65%;-webkit-mask-image:linear-gradient(to right,transparent,#000 35%);mask-image:linear-gradient(to right,transparent,#000 35%)">
+      <image-slot id="offer" shape="rect" src="img/offer.png" placeholder="Sunset beach"></image-slot>
+    </div>
+    <div style="position:relative;display:flex;align-items:center;gap:22px;padding:18px clamp(20px,4vw,50px);flex-wrap:wrap;pointer-events:none">
+      <span style="width:56px;height:56px;border-radius:50%;background:#fbf4e7;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">redeem</span></span>
+      <div style="flex:1;min-width:220px">
+        <div style="font-family:'DM Serif Display',serif;font-size:clamp(22px,2vw,26px);color:#fff">Special Offers</div>
+        <div style="font-size:13px;color:#e3e7ee;margin-top:3px">Get exclusive deals on tour packages, hotel bookings and more.</div>
+      </div>
+      <a href="Offers.dc.html" style="pointer-events:auto;height:44px;padding:0 26px;border-radius:999px;border:1px solid rgba(255,255,255,.8);background:rgba(20,30,45,.35);backdrop-filter:blur(4px);color:#fff;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;cursor:pointer" style-hover="background:#fff;color:#0e2340">View Offers <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+    </div>
+  </div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,150px"></dc-import>
+
+<sc-if value="{{ toast }}">
+  <div style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:120;background:#0e2340;color:#fff;padding:12px 20px;border-radius:999px;font-size:13px;box-shadow:0 12px 30px rgba(0,0,0,.25);animation:kwFade .25s ease;white-space:nowrap">{{ toast }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    w: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    menu: false, active: 'Home', slide: 0,
+    dest: '', destOpen: false, checkIn: '', checkOut: '', travOpen: false, rooms: 1, adults: 2, kids: 0,
+    filter: '', tIdx: 0, modal: false, done: false, tried: false, toast: '',
+    f: { name: '', phone: '', email: '', service: 'Tour Package', pkg: 'Not decided yet', date: '', msg: '' }
+  };
+  pkgRef = React.createRef();
+  slidesData = [
+    { id: 'hero-mountains', src: 'img/hero-mountains.png', ph: 'Hero – traveller overlooking mountains', t1: 'Your Next Journey', t2: 'Starts Here', p: 'Discover breathtaking destinations, premium stays, comfortable travel and personalized services – all in one place.' },
+    { id: 'hero-maldives', src: 'img/hero-maldives.png', ph: 'Hero – overwater villas', t1: 'Island Escapes', t2: 'Made Simple', p: 'Handpicked beach resorts, honeymoon villas and seamless transfers – from the Maldives to the Konkan coast.' },
+    { id: 'hero-sunset', src: 'img/hero-sunset.png', ph: 'Hero – cliffside resort at sunset', t1: 'Luxury Retreats', t2: 'At Golden Hour', p: 'Cliffside villas, infinity pools and ocean sunsets – premium stays curated for unforgettable evenings.' }
+  ];
+  pk = [
+    { id: 'pkg-kerala', src: 'img/kerala.png', title: 'Kerala Getaway', price: '12,999', dur: '4 Nights / 5 Days', loc: 'Kerala' },
+    { id: 'pkg-himachal', src: 'img/himachal.png', title: 'Himachal Escape', price: '15,999', dur: '5 Nights / 6 Days', loc: 'Himachal Pradesh' },
+    { id: 'pkg-goa', src: 'img/goa.png', title: 'Goa Beach Holiday', price: '13,999', dur: '4 Nights / 5 Days', loc: 'Goa' },
+    { id: 'pkg-rajasthan', src: 'img/rajasthan.png', title: 'Rajasthan Royal Tour', price: '18,999', dur: '5 Nights / 6 Days', loc: 'Rajasthan' },
+    { id: 'pkg-maldives', src: 'img/maldives.png', title: 'Maldives Honeymoon', price: '45,999', dur: '5 Nights / 6 Days', loc: 'Maldives' }
+  ];
+  reviews = [
+    { q: 'Our driver was punctual, polite and knew every shortcut in Himachal. The hotels were exactly as promised — we did not have to worry about a thing.', n: 'Ritika & Aman Sharma', t: 'Himachal Escape · March 2025' },
+    { q: 'Karwaa planned our Kerala trip for a family of six in two days. The houseboat stay was the highlight of the year for our kids.', n: 'Suresh Menon', t: 'Kerala Getaway · December 2024' },
+    { q: 'Booked an outstation cab with driver for a week in Rajasthan. Clean car, fair pricing and 24/7 support on WhatsApp whenever we needed it.', n: 'Neha Kulkarni', t: 'Driver Assign · Jaipur – Udaipur' },
+    { q: 'The Maldives honeymoon package was flawless, from airport pickup to the overwater villa. Worth every rupee.', n: 'Karan & Priya Verma', t: 'Maldives Honeymoon · February 2025' }
+  ];
+  componentDidMount() {
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onResize);
+    this.onDoc = () => { if (this.state.travOpen) this.setState({ travOpen: false }); };
+    document.addEventListener('click', this.onDoc);
+    this.slideTimer = setInterval(() => { if (!this.state.modal) this.setState(s => ({ slide: (s.slide + 1) % 3 })); }, 7000);
+    this.tTimer = setInterval(() => this.setState(s => ({ tIdx: (s.tIdx + 1) % this.reviews.length })), 8000);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    document.removeEventListener('click', this.onDoc);
+    clearInterval(this.slideTimer); clearInterval(this.tTimer); clearTimeout(this.toastT);
+  }
+  scrollTo(id) {
+    const el = document.getElementById(id); if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 78, behavior: 'smooth' });
+  }
+  showToast(msg) { clearTimeout(this.toastT); this.setState({ toast: msg }); this.toastT = setTimeout(() => this.setState({ toast: '' }), 2800); }
+  open(service, pkg) {
+    this.setState(s => ({ modal: true, done: false, tried: false, menu: false, f: { ...s.f, service: service || s.f.service, pkg: pkg || s.f.pkg, date: s.f.date || s.checkIn } }));
+  }
+  scrollPkg(dir) {
+    const el = this.pkgRef.current; if (!el) return;
+    const card = el.firstElementChild; const step = card ? card.offsetWidth + 18 : 300;
+    const max = el.scrollWidth - el.clientWidth;
+    if (dir > 0 && el.scrollLeft >= max - 4) el.scrollTo({ left: 0 });
+    else if (dir < 0 && el.scrollLeft <= 4) el.scrollTo({ left: max });
+    else el.scrollBy({ left: dir * step });
+  }
+  renderVals() {
+    const s = this.state, w = s.w, isM = w < 760, isT = w < 1100;
+    const today = new Date().toISOString().slice(0, 10);
+    const slides = this.slidesData.map((d, i) => ({
+      ...d, op: i === s.slide ? 1 : 0, pe: i === s.slide ? 'auto' : 'none',
+      dotW: i === s.slide ? '26px' : '8px', dotBg: i === s.slide ? '#a8742b' : '#d9c9ae',
+      go: () => this.setState({ slide: i })
+    }));
+    const cur = this.slidesData[s.slide];
+    const destList = ['Kerala', 'Himachal Pradesh', 'Goa', 'Rajasthan', 'Maldives', 'Kashmir', 'Uttarakhand', 'Andaman'];
+    const q = s.dest.trim().toLowerCase();
+    const destOptions = destList.filter(d => !q || d.toLowerCase().includes(q)).slice(0, 6).map(name => ({ name, pick: e => { e.preventDefault(); this.setState({ dest: name, destOpen: false }); } }));
+    const fmt = n => n;
+    const travLabel = `${s.rooms} Room${s.rooms > 1 ? 's' : ''}, ${s.adults} Adult${s.adults > 1 ? 's' : ''}${s.kids ? `, ${s.kids} Child${s.kids > 1 ? 'ren' : ''}` : ''}`;
+    const ctr = (key, label, sub, min, max) => ({ label, sub, val: fmt(s[key]),
+      dec: () => this.setState(st => ({ [key]: Math.max(min, st[key] - 1) })),
+      inc: () => this.setState(st => ({ [key]: Math.min(max, st[key] + 1) })) });
+    const filt = s.filter.toLowerCase();
+    const matched = filt ? this.pk.filter(p => (p.loc + ' ' + p.title).toLowerCase().includes(filt)) : this.pk;
+    const list = matched.length ? matched : this.pk;
+    const packages = list.map(p => ({ ...p, href: 'Package.dc.html?id=' + p.id.replace('pkg-', '') }));
+    const pkgSub = !filt ? 'Explore our most loved destinations and handpicked travel experiences.'
+      : matched.length ? `Showing packages for “${s.filter}”.` : `No ready package for “${s.filter}” yet — request a customized trip. Showing all packages.`;
+    const setF = k => e => { const v = e.target.value; this.setState(st => ({ f: { ...st.f, [k]: v } })); };
+    const on = {}; ['name', 'phone', 'email', 'service', 'pkg', 'date', 'msg'].forEach(k => on[k] = setF(k));
+    const valid = { name: s.f.name.trim().length > 1, phone: /^\d{10}$/.test(s.f.phone.replace(/\D/g, '').slice(-10)) && s.f.phone.replace(/\D/g, '').length >= 10, email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.f.email) };
+    const err = {}; Object.keys(valid).forEach(k => err[k] = s.tried && !valid[k] ? '#d98a78' : '#e6dccb');
+    const r = this.reviews[s.tIdx];
+    return {
+      navDisplay: isT ? 'none' : 'flex', contactDisplay: w < 1320 ? 'none' : 'flex',
+      burgerDisplay: isT ? 'flex' : 'none', bookBtnDisplay: isM ? 'none' : 'flex',
+      burgerIcon: s.menu ? 'close' : 'menu', menuVisible: s.menu && isT,
+      toggleMenu: () => this.setState({ menu: !s.menu }),
+      goHome: e => { e.preventDefault(); this.setState({ active: 'Home' }); this.scrollTo('home'); },
+
+      heroMinH: isM ? 'auto' : 'clamp(540px,40vw,620px)',
+      heroImgW: isM ? '100%' : '70%', heroImgH: isM ? '300px' : '100%',
+      heroMask: isM ? 'linear-gradient(to bottom,#000 55%,transparent)' : 'linear-gradient(to right,transparent 0%,rgba(0,0,0,.6) 22%,#000 42%)',
+      heroPad: isM ? '250px 20px 48px' : 'clamp(40px,4vw,56px) 28px 64px',
+      slides, slideKey: 's' + s.slide, slideT1: cur.t1, slideT2: cur.t2, slideP: cur.p,
+      prevSlide: () => this.setState({ slide: (s.slide + 2) % 3 }), nextSlide: () => this.setState({ slide: (s.slide + 1) % 3 }),
+      searchCols: isM ? 'minmax(0,1fr)' : isT ? 'minmax(0,1fr) minmax(0,1fr)' : 'minmax(0,1.15fr) minmax(0,1.45fr) minmax(0,1fr) auto', fieldDivider: isT ? 'none' : '1px solid #eee7dc', fieldDividerB: isM ? '1px solid #f3ede3' : 'none', formW: isT ? '100%' : 'min(900px, calc(100vw - 56px))', formMaxW: isT ? '100%' : 'none', travRight: isT ? '0' : '90px',
+      bookMl: isT ? 'auto' : '0', burgerMl: isM ? 'auto' : '0', btnSpan: isT && !isM ? '1 / -1' : 'auto',
+      dest: s.dest, onDest: e => this.setState({ dest: e.target.value, destOpen: true }),
+      openDest: () => this.setState({ destOpen: true, travOpen: false }),
+      closeDestLater: () => setTimeout(() => this.setState({ destOpen: false }), 120),
+      destOpen: s.destOpen && destOptions.length > 0, destOptions,
+      today, maxDate: '2099-12-31', checkIn: s.checkIn, checkOut: s.checkOut, checkOutMin: s.checkIn || today,
+      checkInColor: s.checkIn ? '#1b2a3d' : '#8a93a0', checkOutColor: s.checkOut ? '#1b2a3d' : '#8a93a0',
+      onCheckIn: e => { const v = e.target.value; if (v && v > '2099-12-31') return; this.setState(st => ({ checkIn: v, checkOut: st.checkOut && st.checkOut < v ? '' : st.checkOut })); },
+      onCheckOut: e => { const v = e.target.value; if (v && v > '2099-12-31') return; this.setState({ checkOut: v }); },
+      travLabel, travOpen: s.travOpen,
+      toggleTrav: e => { e.stopPropagation(); this.setState({ travOpen: !s.travOpen, destOpen: false }); },
+      stop: e => e.stopPropagation(),
+      counters: [ctr('rooms', 'Rooms', 'Max 5', 1, 5), ctr('adults', 'Adults', 'Age 12+', 1, 12), ctr('kids', 'Children', 'Age 0–11', 0, 8)],
+      onSearch: e => {
+        e.preventDefault();
+        const q = [['dest', s.dest.trim()], ['in', s.checkIn], ['out', s.checkOut], ['trav', travLabel]].filter(x => x[1]).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&');
+        window.location.href = 'Packages.dc.html' + (q ? '?' + q : '');
+      },
+      features: [
+        ['directions_car', 'Driver Assign', 'Safe & Reliable Drivers', 'driver'],
+        ['flight', 'Tour Packages', 'Domestic & International', 'tour'],
+        ['apartment', 'Hotel Bookings', 'Luxury & Budget Stays', 'hotel'],
+        ['directions_bus', 'Transport Services', 'Cars, Vans & Buses', 'transport'],
+        ['map', 'Customized Trips', 'Your Trip, Your Way', 'custom'],
+        ['support_agent', '24/7 Support', 'Always Here for You', 'support']
+      ].map(([icon, title, sub, key]) => ({ icon, title, sub, href: key === 'tour' ? 'Packages.dc.html' : 'Service.dc.html?s=' + key })),
+      servicesCols: isT ? '1fr' : '0.85fr 2fr',
+      goPackages: () => this.scrollTo('packages'),
+      services: [
+        { id: 'svc-driver', src: 'img/driver.png', title: 'Driver Assign', desc: 'Professional & verified drivers for your convenience.', cta: 'Book Now', href: 'Booking.dc.html?service=Driver%20Assign' },
+        { id: 'svc-tour', src: 'img/tour.png', title: 'Tour Packages', desc: 'Explore handpicked destinations with exclusive packages.', cta: 'View Packages', href: 'Packages.dc.html' },
+        { id: 'svc-hotel', src: 'img/hotel.png', title: 'Hotels', desc: 'Premium & budget stays for every traveler.', cta: 'Book Hotel', href: 'Booking.dc.html?service=Hotel%20Booking' }
+      ],
+      pkgRef: this.pkgRef, packages, pkgSub, hasFilter: !!s.filter,
+      clearFilter: () => this.setState({ filter: '', dest: '' }),
+      pkgBasis: w >= 1100 ? 'calc((100% - 72px) / 5)' : w >= 760 ? 'calc((100% - 36px) / 3)' : '78%',
+      pkgPrev: () => this.scrollPkg(-1), pkgNext: () => this.scrollPkg(1),
+      viewAll: e => { e.preventDefault(); this.setState({ filter: '', dest: '' }); this.scrollTo('packages'); },
+      whyImgW: isT ? '0' : '15%', whyPadL: isT ? '28px' : 'max(28px, calc(12% + 20px))', whyCols: isT ? '1fr' : '1fr 1.55fr',
+      stats: [['verified_user', 'Trusted & Verified', 'Drivers'], ['star', 'Premium', 'Hotels & Resorts'], ['groups', '1000+ Happy', 'Travelers'], ['headset_mic', '24/7', 'Customer Support']]
+        .map(([icon, l1, l2], i) => ({ icon, l1, l2, border: i === 0 || isM ? 'none' : '1px solid #e6dccb' })),
+      tKey: 't' + s.tIdx, tQuote: r.q, tName: r.n, tTrip: r.t,
+      tDots: this.reviews.map((_, i) => ({ w: i === s.tIdx ? '22px' : '8px', bg: i === s.tIdx ? '#a8742b' : '#e3d6c0', go: () => this.setState({ tIdx: i }) })),
+      tPrev: () => this.setState({ tIdx: (s.tIdx + this.reviews.length - 1) % this.reviews.length }),
+      tNext: () => this.setState({ tIdx: (s.tIdx + 1) % this.reviews.length }),
+
+      socials: [{ icon: 'thumb_up', label: 'Facebook', href: 'https://facebook.com' }, { icon: 'photo_camera', label: 'Instagram', href: 'https://instagram.com' }, { icon: 'smart_display', label: 'YouTube', href: 'https://youtube.com' }, { icon: 'location_on', label: 'Location', href: 'https://maps.google.com' }],
+      modalOpen: s.modal, showForm: s.modal && !s.done, submitted: s.modal && s.done,
+      modalEyebrow: s.done ? 'REQUEST RECEIVED' : 'BOOK YOUR TRIP', modalTitle: s.done ? 'We’ll be in touch shortly' : 'Tell us about your journey',
+      closeModal: () => this.setState({ modal: false }),
+      f: s.f, on, err, hasErr: s.tried && !(valid.name && valid.phone && valid.email),
+      serviceOpts: ['Driver Assign', 'Tour Package', 'Hotel Booking', 'Transport', 'Customized Trip'],
+      pkgOpts: ['Not decided yet', ...this.pk.map(p => p.title)],
+      submitBook: e => { e.preventDefault(); if (valid.name && valid.phone && valid.email) this.setState({ done: true, tried: false }); else this.setState({ tried: true }); },
+      toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<script src="./data.js"></script>
+<style>
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+input,select,textarea,button{font-family:inherit}
+@keyframes kwFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#faf7f2">
+  <dc-import name="Header" active="" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+  <dc-import name="PageBanner" eyebrow="BOOK YOUR TRIP" title="Tell us about your journey" crumb="Booking" sub="Fill in a few details and our travel desk will call you back within 2 hours to confirm." src="img/hero-maldives.png" hint-size="100%,320px"></dc-import>
+
+  <section style="max-width:1280px;margin:0 auto;padding:40px 28px 72px;display:grid;grid-template-columns:{{ cols }};gap:28px;align-items:start">
+    <div style="background:#fff;border:1px solid #f0e9dd;border-radius:20px;box-shadow:0 10px 30px rgba(20,35,60,.06)">
+      <sc-if value="{{ showForm }}">
+        <form onSubmit="{{ submit }}" style="padding:clamp(22px,3vw,34px);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Full Name *<input value="{{ f.name }}" onChange="{{ on.name }}" placeholder="Your name" style="height:48px;border:1px solid {{ err.name }};border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Phone / WhatsApp *<input value="{{ f.phone }}" onChange="{{ on.phone }}" placeholder="10-digit mobile" inputmode="tel" style="height:48px;border:1px solid {{ err.phone }};border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Email *<input type="email" value="{{ f.email }}" onChange="{{ on.email }}" placeholder="you@example.com" style="height:48px;border:1px solid {{ err.email }};border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Service<select value="{{ f.service }}" onChange="{{ on.service }}" style="height:48px;border:1px solid #e6dccb;border-radius:12px;padding:0 12px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"><sc-for list="{{ serviceOpts }}" as="o"><option value="{{ o }}">{{ o }}</option></sc-for></select></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Package<select value="{{ f.pkg }}" onChange="{{ on.pkg }}" style="height:48px;border:1px solid #e6dccb;border-radius:12px;padding:0 12px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"><option value="">Not decided yet</option><sc-for list="{{ pkgOpts }}" as="o"><option value="{{ o.id }}">{{ o.title }}</option></sc-for></select></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Destination / Pickup City<input value="{{ f.dest }}" onChange="{{ on.dest }}" placeholder="e.g. Delhi, Goa" style="height:48px;border:1px solid #e6dccb;border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Travel Date<input type="date" value="{{ f.date }}" min="{{ today }}" onChange="{{ on.date }}" style="height:48px;border:1px solid #e6dccb;border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Travellers<input type="number" min="1" max="50" value="{{ f.pax }}" onChange="{{ on.pax }}" style="height:48px;border:1px solid #e6dccb;border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Offer Code<input value="{{ f.offer }}" onChange="{{ on.offer }}" placeholder="Optional" style="height:48px;border:1px solid {{ offerBorder }};border-radius:12px;padding:0 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d;text-transform:uppercase"></label>
+          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600">Message<textarea value="{{ f.msg }}" onChange="{{ on.msg }}" rows="4" placeholder="Special requests, hotel preferences, pickup time…" style="border:1px solid #e6dccb;border-radius:12px;padding:12px 14px;font-size:14px;font-weight:400;outline:none;background:#fdfbf8;color:#1b2a3d;resize:vertical"></textarea></label>
+          <sc-if value="{{ hasErr }}"><div style="grid-column:1/-1;font-size:13px;color:#b3412e">Please enter your name, a valid 10-digit phone number and email.</div></sc-if>
+          <button type="submit" style="grid-column:1/-1;height:52px;border:none;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 16px rgba(147,98,31,.28)">Send Booking Request <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ done }}">
+        <div style="padding:48px 28px;text-align:center;animation:kwFade .3s ease">
+          <span style="width:74px;height:74px;border-radius:50%;background:#f8efe0;display:inline-flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:40px;color:#a8742b">check_circle</span></span>
+          <div style="font-family:'DM Serif Display',serif;font-size:30px;color:#0e2340;margin-top:16px">Thank you, {{ f.name }}!</div>
+          <div style="margin-top:8px;font-size:13px;color:#7a8594">Booking reference <strong style="color:#0e2340">{{ ref }}</strong></div>
+          <p style="font-size:15px;color:#4a5566;line-height:1.6;margin:12px auto 0;max-width:420px">Our travel desk will call you on {{ f.phone }} within 2 hours to confirm your {{ f.service }} request.</p>
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:26px;flex-wrap:wrap">
+            <a href="{{ waHref }}" target="_blank" style="height:48px;padding:0 22px;border-radius:999px;border:1px solid #d9c3a0;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#a8742b">Chat on WhatsApp</a>
+            <a href="Karwaa Website.dc.html" style="height:48px;padding:0 26px;border-radius:999px;background:#0e2340;color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center">Back to Home</a>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <aside style="display:flex;flex-direction:column;gap:18px">
+      <div style="background:#fff;border:1px solid #f0e9dd;border-radius:20px;overflow:hidden">
+        <sc-if value="{{ hasPkg }}"><img src="{{ pkg.src }}" alt="{{ pkg.title }}" style="width:100%;aspect-ratio:1.8/1;object-fit:cover;display:block"></sc-if>
+        <div style="padding:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">BOOKING SUMMARY</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;font-size:14px">
+            <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#7a8594">Service</span><span style="font-weight:600;text-align:right">{{ f.service }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#7a8594">Package</span><span style="font-weight:600;text-align:right">{{ pkgTitle }}</span></div>
+            <sc-if value="{{ plan }}"><div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#7a8594">Plan</span><span style="font-weight:600;text-align:right">{{ plan }}</span></div></sc-if>
+            <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#7a8594">Travellers</span><span style="font-weight:600">{{ f.pax }}</span></div>
+            <sc-if value="{{ offerOk }}"><div style="display:flex;justify-content:space-between;gap:10px;color:#3d8b5a"><span>Offer {{ offerCode }}</span><span style="font-weight:600">{{ offerOff }}</span></div></sc-if>
+            <sc-if value="{{ hasPkg }}"><div style="display:flex;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid #f2ece2"><span style="color:#4a5566">Estimated total</span><span style="font-weight:700;font-size:18px;color:#0e2340">₹ {{ total }}</span></div></sc-if>
+          </div>
+        </div>
+      </div>
+      <div style="background:#12223a;border-radius:20px;padding:22px;color:#fff">
+        <div style="font-family:'DM Serif Display',serif;font-size:21px">Prefer to talk?</div>
+        <div style="font-size:13px;color:#c9d0da;margin-top:4px">Our team is available 24/7.</div>
+        <a href="tel:+919311033931" style="margin-top:14px;display:flex;align-items:center;gap:10px;color:#fff;font-size:14px"><span class="material-symbols-outlined" style="color:#d0a35a">call</span>+91 9311033931</a>
+        <a href="mailto:sonuupawaar@gmail.com" style="margin-top:10px;display:flex;align-items:center;gap:10px;color:#fff;font-size:14px"><span class="material-symbols-outlined" style="color:#d0a35a">mail</span>sonuupawaar@gmail.com</a>
+      </div>
+    </aside>
+  </section>
+  <dc-import name="Footer" hint-size="100%,150px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { w: window.innerWidth, done: false, tried: false, ref: '', f: { name: '', phone: '', email: '', service: 'Tour Package', pkg: '', dest: '', date: '', pax: 2, offer: '', msg: '' } };
+  componentDidMount() {
+    this.r = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.r);
+    const go = () => {
+      const D = window.KD, trav = D.q('trav'), m = trav.match(/(\d+) Adult/);
+      this.setState(s => ({ f: { ...s.f, service: D.q('service') || s.f.service, pkg: D.q('pkg'), dest: D.q('dest'), date: D.q('in'), offer: D.q('offer'),
+        pax: +D.q('pax') || (m ? +m[1] : 2), msg: [D.q('plan') && 'Plan: ' + D.q('plan'), D.q('out') && 'Return: ' + D.q('out'), trav].filter(Boolean).join(' · ') } }));
+    };
+    if (window.KD) go(); else this.t = setInterval(() => { if (window.KD) { clearInterval(this.t); go(); } }, 30);
+  }
+  componentWillUnmount() { clearInterval(this.t); window.removeEventListener('resize', this.r); }
+  renderVals() {
+    const D = window.KD, s = this.state, f = s.f;
+    if (!D) return { f, on: {}, err: {} };
+    const setF = k => e => { const v = e.target.value; this.setState(st => ({ f: { ...st.f, [k]: v } })); };
+    const on = {}; Object.keys(f).forEach(k => on[k] = setF(k));
+    const digits = f.phone.replace(/\D/g, '');
+    const valid = { name: f.name.trim().length > 1, phone: digits.length >= 10 && digits.length <= 12, email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email) };
+    const err = {}; Object.keys(valid).forEach(k => err[k] = s.tried && !valid[k] ? '#d98a78' : '#e6dccb');
+    const pkg = D.packages.find(p => p.id === f.pkg);
+    const offer = D.offers.find(o => o.code === f.offer.trim().toUpperCase());
+    const pax = Math.max(1, +f.pax || 1);
+    let total = pkg ? pkg.price * pax : 0;
+    if (offer && pkg) { const pct = offer.off.match(/(\d+)%/); total = pct ? Math.round(total * (1 - pct[1] / 100)) : total - 5000; }
+    return {
+      f, on, err, today: new Date().toISOString().slice(0, 10), cols: s.w < 1000 ? '1fr' : 'minmax(0,1fr) 380px',
+      serviceOpts: ['Driver Assign', 'Tour Package', 'Hotel Booking', 'Transport', 'Customized Trip'],
+      pkgOpts: D.packages, hasPkg: !!pkg, pkg: pkg || {}, pkgTitle: pkg ? pkg.title : 'Not decided yet', total: D.inr(Math.max(0, total)),
+      plan: D.q('plan'), offerOk: !!offer, offerCode: offer ? offer.code : '', offerOff: offer ? offer.off : '',
+      offerBorder: f.offer && !offer ? '#d98a78' : f.offer ? '#7fbf93' : '#e6dccb',
+      hasErr: s.tried && !(valid.name && valid.phone && valid.email),
+      showForm: !s.done, done: s.done, ref: s.ref,
+      waHref: 'https://wa.me/919311033931?text=' + encodeURIComponent('Hi Karwaa, booking ref ' + s.ref + ' (' + f.service + ').'),
+      submit: e => {
+        e.preventDefault();
+        if (valid.name && valid.phone && valid.email) { this.setState({ done: true, tried: false, ref: 'KW-' + Math.floor(100000 + Math.random() * 900000) }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        else this.setState({ tried: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

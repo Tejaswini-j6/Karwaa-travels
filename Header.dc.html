@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<header style="background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid #efe8dc;font-family:'DM Sans',system-ui,sans-serif">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;height:78px;display:flex;align-items:center;gap:24px">
+    <a href="Karwaa Website.dc.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0;color:inherit;text-decoration:none">
+      <img src="img/logo.png" alt="Karwaa" style="width:60px;height:58px;border-radius:50%;object-fit:cover;flex-shrink:0">
+      <div style="display:flex;flex-direction:column;line-height:1">
+        <span style="font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:1.5px;color:#a8742b">KARWAA</span>
+        <span style="font-size:10px;color:#5b6778;margin-top:4px;letter-spacing:.3px">A unit MCS Associates</span>
+      </div>
+    </a>
+    <nav style="display:{{ navDisplay }};align-items:center;gap:{{ navGap }};margin-left:auto">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+        <a href="{{ n.href }}" style="font-size:13px;font-weight:500;white-space:nowrap;color:{{ n.color }};padding:6px 0;border-bottom:2px solid {{ n.border }};text-decoration:none;transition:color .2s" style-hover="color:#a8742b">{{ n.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="display:{{ contactDisplay }};align-items:center;gap:22px;margin-left:10px">
+      <a href="tel:+919311033931" style="display:flex;align-items:center;gap:9px;flex-shrink:0;white-space:nowrap;color:inherit;text-decoration:none">
+        <span style="width:34px;height:34px;border-radius:50%;flex-shrink:0;background:#f6eedf;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px;color:#a8742b">call</span></span>
+        <span style="display:flex;flex-direction:column;line-height:1.35"><span style="font-size:11px;font-weight:600;color:#1b2a3d">+91 9311033931</span><span style="font-size:10px;color:#7a8594">Call / WhatsApp</span></span>
+      </a>
+      <a href="mailto:sonuupawaar@gmail.com" style="display:flex;align-items:center;gap:9px;flex-shrink:0;white-space:nowrap;color:inherit;text-decoration:none">
+        <span style="width:34px;height:34px;border-radius:50%;flex-shrink:0;background:#f6eedf;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px;color:#a8742b">mail</span></span>
+        <span style="display:flex;flex-direction:column;line-height:1.35"><span style="font-size:11px;font-weight:600;color:#1b2a3d">sonuupawaar@gmail.com</span><span style="font-size:10px;color:#7a8594">Email Us</span></span>
+      </a>
+    </div>
+    <a href="Booking.dc.html" style="display:{{ bookBtnDisplay }};margin-left:{{ bookMl }};align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 6px 16px rgba(147,98,31,.28);flex-shrink:0" style-hover="filter:brightness(1.08)">Book Now <span class="material-symbols-outlined" style="font-size:17px">arrow_forward</span></a>
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:{{ burgerDisplay }};margin-left:{{ burgerMl }};width:44px;height:44px;border-radius:12px;border:1px solid #eadfcd;background:#fff;align-items:center;justify-content:center;cursor:pointer;color:#1b2a3d"><span class="material-symbols-outlined">{{ burgerIcon }}</span></button>
+  </div>
+  <sc-if value="{{ menuVisible }}">
+    <div style="border-top:1px solid #efe8dc;background:#fff;padding:10px 28px 22px;display:flex;flex-direction:column">
+      <sc-for list="{{ nav }}" as="n">
+        <a href="{{ n.href }}" style="font-size:15px;font-weight:500;color:{{ n.color }};padding:13px 0;border-bottom:1px solid #f3ede3;text-decoration:none">{{ n.label }}</a>
+      </sc-for>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <a href="tel:+919311033931" style="flex:1;min-width:140px;height:46px;border-radius:999px;border:1px solid #d9c3a0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;color:#a8742b;text-decoration:none"><span class="material-symbols-outlined" style="font-size:18px">call</span>Call Us</a>
+        <a href="Booking.dc.html" style="flex:1;min-width:140px;height:46px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;text-decoration:none">Book Now</a>
+      </div>
+    </div>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:80},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Home&quot;,&quot;About Us&quot;,&quot;Packages&quot;,&quot;Services&quot;,&quot;Driver Assign&quot;,&quot;Gallery&quot;,&quot;Contact&quot;],&quot;default&quot;:&quot;Home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { w: window.innerWidth, menu: false };
+  componentDidMount() { this.r = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.r); }
+  componentWillUnmount() { window.removeEventListener('resize', this.r); }
+  renderVals() {
+    const { w, menu } = this.state, isM = w < 760, isT = w < 1100, active = this.props.active || 'Home';
+    const items = [['Home', 'Karwaa Website.dc.html'], ['About Us', 'About.dc.html'], ['Packages', 'Packages.dc.html'], ['Services', 'Services.dc.html'], ['Driver Assign', 'Service.dc.html?s=driver'], ['Gallery', 'Gallery.dc.html'], ['Contact', 'Contact.dc.html']];
+    return {
+      nav: items.map(([label, href]) => ({ label, href, color: label === active ? '#a8742b' : '#1b2a3d', border: label === active ? '#a8742b' : 'transparent' })),
+      navDisplay: isT ? 'none' : 'flex', contactDisplay: w < 1400 ? 'none' : 'flex', navGap: w < 1560 ? '18px' : '26px', burgerDisplay: isT ? 'flex' : 'none',
+      bookBtnDisplay: isM ? 'none' : 'flex', bookMl: isT ? 'auto' : '0', burgerMl: isM ? 'auto' : '0',
+      burgerIcon: menu ? 'close' : 'menu', menuVisible: menu && isT, toggleMenu: () => this.setState({ menu: !menu })
+    };
+  }
+}
+</script>
+</body>
+</html>

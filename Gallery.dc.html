@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Alex+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0,0" rel="stylesheet">
+<style>
+body{margin:0;background:#faf7f2;color:#1b2a3d;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#a8742b;text-decoration:none}
+a:hover{color:#7d5319}
+button{font-family:inherit}
+@keyframes kwFade{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#faf7f2">
+  <dc-import name="Header" active="Gallery" hint-size="100%,78px" style="position:sticky;top:0;z-index:50;display:block"></dc-import>
+  <dc-import name="PageBanner" eyebrow="GALLERY" title="Moments From the Road" crumb="Gallery" sub="A glimpse of the places, stays and journeys our travellers have loved." src="img/hero-maldives.png" hint-size="100%,320px"></dc-import>
+
+  <section style="max-width:1280px;margin:0 auto;padding:40px 28px 72px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+        <button onClick="{{ c.pick }}" style="height:40px;padding:0 20px;border-radius:999px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:13px;font-weight:600;cursor:pointer;transition:all .2s">{{ c.label }}</button>
+      </sc-for>
+    </div>
+    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));grid-auto-rows:220px;grid-auto-flow:dense;gap:16px">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="9">
+        <button onClick="{{ it.open }}" style="position:relative;padding:0;border:none;border-radius:16px;overflow:hidden;cursor:zoom-in;grid-row:{{ it.span }};animation:kwFade .35s ease;background:#e9eef2">
+          <img src="{{ it.src }}" alt="{{ it.title }}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s" style-hover="transform:scale(1.05)">
+          <span style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(to top,rgba(10,22,40,.7),transparent);color:#fff;font-size:13px;font-weight:600;text-align:left;pointer-events:none">{{ it.title }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-if value="{{ lbOpen }}">
+    <div onClick="{{ close }}" style="position:fixed;inset:0;z-index:100;background:rgba(8,16,28,.9);display:flex;align-items:center;justify-content:center;padding:24px">
+      <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute;left:18px;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined">chevron_left</span></button>
+      <div onClick="{{ stop }}" style="max-width:1100px;width:100%;text-align:center;animation:kwFade .25s ease">
+        <img src="{{ cur.src }}" alt="{{ cur.title }}" style="max-width:100%;max-height:78vh;border-radius:14px;display:inline-block">
+        <div style="margin-top:14px;color:#fff;font-family:'DM Serif Display',serif;font-size:22px">{{ cur.title }}</div>
+        <div style="color:#aab3c0;font-size:12px;margin-top:4px">{{ counter }}</div>
+      </div>
+      <button onClick="{{ next }}" aria-label="Next" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined">chevron_right</span></button>
+      <button onClick="{{ close }}" aria-label="Close" style="position:absolute;right:18px;top:18px;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined">close</span></button>
+    </div>
+  </sc-if>
+  <dc-import name="Footer" hint-size="100%,150px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { cat: 'All', idx: -1 };
+  photos = [
+    ['img/hero-mountains.png', 'Lakeside summit, Himalayas', 'Mountains', 2], ['img/hero-maldives.png', 'Overwater villas, Maldives', 'Beaches', 1],
+    ['img/kerala.png', 'Houseboat, Alleppey', 'Stays', 1], ['img/rajasthan.png', 'Desert fort, Jaisalmer', 'Heritage', 2],
+    ['img/hero-sunset.png', 'Cliffside resort at sunset', 'Stays', 1], ['img/goa.png', 'Palm beach, South Goa', 'Beaches', 1],
+    ['img/himachal.png', 'Snow peaks, Manali', 'Mountains', 1], ['img/driver.png', 'Our verified chauffeurs', 'Services', 1],
+    ['img/tour.png', 'Top of the valley', 'Mountains', 2], ['img/hotel.png', 'Lagoon resort', 'Stays', 1],
+    ['img/maldives.png', 'Turquoise lagoon', 'Beaches', 1], ['img/why.png', 'Waterfront cottages', 'Stays', 1]
+  ].map(([src, title, cat, rows]) => ({ src, title, cat, rows }));
+  componentDidMount() {
+    this.k = e => { if (this.state.idx < 0) return; if (e.key === 'Escape') this.setState({ idx: -1 }); if (e.key === 'ArrowRight') this.step(1); if (e.key === 'ArrowLeft') this.step(-1); };
+    window.addEventListener('keydown', this.k);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this.k); }
+  list() { return this.state.cat === 'All' ? this.photos : this.photos.filter(p => p.cat === this.state.cat); }
+  step(d) { const n = this.list().length; this.setState(s => ({ idx: (s.idx + d + n) % n })); }
+  renderVals() {
+    const s = this.state, list = this.list();
+    return {
+      cats: ['All', 'Mountains', 'Beaches', 'Heritage', 'Stays', 'Services'].map(label => ({ label, pick: () => this.setState({ cat: label }),
+        bg: s.cat === label ? '#a8742b' : '#fff', color: s.cat === label ? '#fff' : '#1b2a3d', border: s.cat === label ? '#a8742b' : '#eadfcd' })),
+      items: list.map((p, i) => ({ ...p, span: 'span ' + p.rows, open: () => this.setState({ idx: i }) })),
+      lbOpen: s.idx >= 0, cur: list[s.idx] || {}, counter: (s.idx + 1) + ' / ' + list.length,
+      close: () => this.setState({ idx: -1 }), stop: e => e.stopPropagation(),
+      prev: e => { e.stopPropagation(); this.step(-1); }, next: e => { e.stopPropagation(); this.step(1); }
+    };
+  }
+}
+</script>
+</body>
+</html>
