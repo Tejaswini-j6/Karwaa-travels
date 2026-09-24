@@ -202,7 +202,30 @@ input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
   </div>
 </section>
 
-<section data-screen-label="Testimonials" style="background:#f5efe5;padding:10px 28px 50px">
+<section id="karwaan" data-screen-label="Karwaan values" style="background:#12223a;color:#fff;padding:clamp(52px,6vw,76px) 28px;position:relative;overflow:hidden">
+  <div style="max-width:1280px;margin:0 auto;position:relative">
+    <div style="text-align:center">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2.4px;color:#d0a35a">THE KARWAAN WAY</div>
+      <h2 style="margin:12px 0 0;font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(30px,3.4vw,44px);line-height:1.1;color:#fff">“The Ultimate Travel Experience”</h2>
+      <p style="margin:14px auto 0;font-size:15px;line-height:1.7;color:#c9d0da;max-width:560px;text-wrap:pretty">Every letter of our name is a promise we keep on every journey.</p>
+    </div>
+    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+      <sc-for list="{{ karwaan }}" as="k" hint-placeholder-count="7">
+        <div style="position:relative;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 18px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;overflow:hidden;transition:transform .25s,background .25s" style-hover="transform:translateY(-4px);background:rgba(255,255,255,.09)">
+          <span aria-hidden="true" style="position:absolute;right:10px;top:-6px;font-family:'DM Serif Display',serif;font-size:78px;line-height:1;color:rgba(208,163,90,.16)">{{ k.letter }}</span>
+          <span style="width:46px;height:46px;border-radius:50%;background:#fbf4e7;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="material-symbols-outlined" style="font-size:24px;color:#a8742b">{{ k.icon }}</span></span>
+          <div style="font-size:16px;font-weight:700;letter-spacing:1.2px;color:#fff;margin-top:4px"><span style="color:#d0a35a">{{ k.letter }}</span>{{ k.rest }}</div>
+          <div style="font-size:13px;line-height:1.5;color:#aab3c0">{{ k.sub }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:36px;display:flex;justify-content:center">
+      <a href="Booking.dc.html" style="height:52px;padding:0 30px;border-radius:999px;background:linear-gradient(180deg,#c99a47,#93621f);color:#fff;font-size:15px;font-weight:700;letter-spacing:.6px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);text-decoration:none" style-hover="filter:brightness(1.08)">Start Your Journey With Us! <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Testimonials" style="background:#f5efe5;padding:50px 28px 50px">
   <div style="max-width:880px;margin:0 auto;background:#fff;border-radius:20px;padding:clamp(28px,4vw,44px);box-shadow:0 10px 30px rgba(20,35,60,.06);text-align:center;border:1px solid #efe6d6">
     <div style="font-size:11px;font-weight:700;letter-spacing:1.6px;color:#a8742b">TRAVELLER STORIES</div>
     <div key="{{ tKey }}" style="animation:kwFade .6s ease">
@@ -381,6 +404,7 @@ class Component extends DCLogic {
       pkgPrev: () => this.scrollPkg(-1), pkgNext: () => this.scrollPkg(1),
       viewAll: e => { e.preventDefault(); this.setState({ filter: '', dest: '' }); this.scrollTo('packages'); },
       whyImgW: isT ? '0' : '15%', whyPadL: isT ? '28px' : 'max(28px, calc(12% + 20px))', whyCols: isT ? '1fr' : '1fr 1.55fr',
+      karwaan: [['explore', 'KHWAISH', 'The desire to explore'], ['hiking', 'ADVENTURE', 'Unforgettable thrills'], ['route', 'ROUTES', 'Discovering hidden trails'], ['travel_explore', 'WANDERLUST', 'Endless love for travel'], ['handshake', 'ATITHI', 'Hospitality at its best'], ['verified_user', 'ASSURANCE', 'Safety & comfort'], ['palette', 'NAVRANG', 'Many colours of journeys']].map(([icon, w, sub]) => ({ icon, letter: w[0], rest: w.slice(1), sub })),
       stats: [['verified_user', 'Trusted & Verified', 'Drivers'], ['star', 'Premium', 'Hotels & Resorts'], ['groups', '1000+ Happy', 'Travelers'], ['headset_mic', '24/7', 'Customer Support']]
         .map(([icon, l1, l2], i) => ({ icon, l1, l2, border: i === 0 || isM ? 'none' : '1px solid #e6dccb' })),
       tKey: 't' + s.tIdx, tQuote: r.q, tName: r.n, tTrip: r.t,
