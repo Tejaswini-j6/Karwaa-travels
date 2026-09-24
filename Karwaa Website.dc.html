@@ -183,7 +183,7 @@ input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
 
 <section id="about" data-screen-label="Why choose us" style="position:relative;background:linear-gradient(180deg,#faf7f2,#f5efe5)">
   <div style="position:absolute;left:0;top:0;width:{{ whyImgW }};height:100%;-webkit-mask-image:linear-gradient(to right,#000 40%,transparent);mask-image:linear-gradient(to right,#000 40%,transparent);opacity:.95">
-    <image-slot id="why" shape="rect" src="img/why.png" placeholder="Resort by water"></image-slot>
+    <image-slot id="why" shape="rect" src="img/why.jpg" placeholder="Resort by water"></image-slot>
   </div>
   <div style="position:relative;max-width:1280px;margin:0 auto;padding:44px 28px 44px {{ whyPadL }};display:grid;grid-template-columns:{{ whyCols }};gap:32px;align-items:center">
     <div>
@@ -222,7 +222,7 @@ input::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
 <section id="offers" data-screen-label="Special offers" style="background:#f5efe5;padding:0 28px 34px">
   <div style="max-width:1224px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(90deg,#132640 0%,#1d3150 45%,#5a4632 100%)">
     <div style="position:absolute;right:0;top:0;bottom:0;width:65%;-webkit-mask-image:linear-gradient(to right,transparent,#000 35%);mask-image:linear-gradient(to right,transparent,#000 35%)">
-      <image-slot id="offer" shape="rect" src="img/offer.png" placeholder="Sunset beach"></image-slot>
+      <image-slot id="offer" shape="rect" src="img/offer.jpg" placeholder="Sunset beach"></image-slot>
     </div>
     <div style="position:relative;display:flex;align-items:center;gap:22px;padding:18px clamp(20px,4vw,50px);flex-wrap:wrap;pointer-events:none">
       <span style="width:56px;height:56px;border-radius:50%;background:#fbf4e7;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="material-symbols-outlined" style="font-size:28px;color:#a8742b">redeem</span></span>
@@ -259,11 +259,11 @@ class Component extends DCLogic {
     { id: 'hero-sunset', src: 'img/hero-sunset.png', ph: 'Hero – cliffside resort at sunset', t1: 'Luxury Retreats', t2: 'At Golden Hour', p: 'Cliffside villas, infinity pools and ocean sunsets – premium stays curated for unforgettable evenings.' }
   ];
   pk = [
-    { id: 'pkg-kerala', src: 'img/kerala.png', title: 'Kerala Getaway', price: '12,999', dur: '4 Nights / 5 Days', loc: 'Kerala' },
-    { id: 'pkg-himachal', src: 'img/himachal.png', title: 'Himachal Escape', price: '15,999', dur: '5 Nights / 6 Days', loc: 'Himachal Pradesh' },
-    { id: 'pkg-goa', src: 'img/goa.png', title: 'Goa Beach Holiday', price: '13,999', dur: '4 Nights / 5 Days', loc: 'Goa' },
-    { id: 'pkg-rajasthan', src: 'img/rajasthan.png', title: 'Rajasthan Royal Tour', price: '18,999', dur: '5 Nights / 6 Days', loc: 'Rajasthan' },
-    { id: 'pkg-maldives', src: 'img/maldives.png', title: 'Maldives Honeymoon', price: '45,999', dur: '5 Nights / 6 Days', loc: 'Maldives' }
+    { id: 'pkg-kerala', src: 'img/kerala.jpg', title: 'Kerala Getaway', price: '12,999', dur: '4 Nights / 5 Days', loc: 'Kerala' },
+    { id: 'pkg-himachal', src: 'img/himachal.jpg', title: 'Himachal Escape', price: '15,999', dur: '5 Nights / 6 Days', loc: 'Himachal Pradesh' },
+    { id: 'pkg-goa', src: 'img/goa.jpg', title: 'Goa Beach Holiday', price: '13,999', dur: '4 Nights / 5 Days', loc: 'Goa' },
+    { id: 'pkg-rajasthan', src: 'img/rajasthan.jpg', title: 'Rajasthan Royal Tour', price: '18,999', dur: '5 Nights / 6 Days', loc: 'Rajasthan' },
+    { id: 'pkg-maldives', src: 'img/maldives.jpg', title: 'Maldives Honeymoon', price: '45,999', dur: '5 Nights / 6 Days', loc: 'Maldives' }
   ];
   reviews = [
     { q: 'Our driver was punctual, polite and knew every shortcut in Himachal. The hotels were exactly as promised — we did not have to worry about a thing.', n: 'Ritika & Aman Sharma', t: 'Himachal Escape · March 2025' },
@@ -371,9 +371,9 @@ class Component extends DCLogic {
       servicesCols: isT ? '1fr' : '0.85fr 2fr',
       goPackages: () => this.scrollTo('packages'),
       services: [
-        { id: 'svc-driver', src: 'img/driver.png', title: 'Driver Assign', desc: 'Professional & verified drivers for your convenience.', cta: 'Book Now', href: 'Booking.dc.html?service=Driver%20Assign' },
-        { id: 'svc-tour', src: 'img/tour.png', title: 'Tour Packages', desc: 'Explore handpicked destinations with exclusive packages.', cta: 'View Packages', href: 'Packages.dc.html' },
-        { id: 'svc-hotel', src: 'img/hotel.png', title: 'Hotels', desc: 'Premium & budget stays for every traveler.', cta: 'Book Hotel', href: 'Booking.dc.html?service=Hotel%20Booking' }
+        { id: 'svc-driver', src: 'img/driver.jpg', title: 'Driver Assign', desc: 'Professional & verified drivers for your convenience.', cta: 'Book Now', href: 'Booking.dc.html?service=Driver%20Assign' },
+        { id: 'svc-tour', src: 'img/tour.jpg', title: 'Tour Packages', desc: 'Explore handpicked destinations with exclusive packages.', cta: 'View Packages', href: 'Packages.dc.html' },
+        { id: 'svc-hotel', src: 'img/hotel.jpg', title: 'Hotels', desc: 'Premium & budget stays for every traveler.', cta: 'Book Hotel', href: 'Booking.dc.html?service=Hotel%20Booking' }
       ],
       pkgRef: this.pkgRef, packages, pkgSub, hasFilter: !!s.filter,
       clearFilter: () => this.setState({ filter: '', dest: '' }),

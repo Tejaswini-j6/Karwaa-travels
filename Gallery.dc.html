@@ -59,11 +59,11 @@ class Component extends DCLogic {
   state = { cat: 'All', idx: -1 };
   photos = [
     ['img/hero-mountains.png', 'Lakeside summit, Himalayas', 'Mountains', 2], ['img/hero-maldives.png', 'Overwater villas, Maldives', 'Beaches', 1],
-    ['img/kerala.png', 'Houseboat, Alleppey', 'Stays', 1], ['img/rajasthan.png', 'Desert fort, Jaisalmer', 'Heritage', 2],
-    ['img/hero-sunset.png', 'Cliffside resort at sunset', 'Stays', 1], ['img/goa.png', 'Palm beach, South Goa', 'Beaches', 1],
-    ['img/himachal.png', 'Snow peaks, Manali', 'Mountains', 1], ['img/driver.png', 'Our verified chauffeurs', 'Services', 1],
-    ['img/tour.png', 'Top of the valley', 'Mountains', 2], ['img/hotel.png', 'Lagoon resort', 'Stays', 1],
-    ['img/maldives.png', 'Turquoise lagoon', 'Beaches', 1], ['img/why.png', 'Waterfront cottages', 'Stays', 1]
+    ['img/kerala.jpg', 'Houseboat, Alleppey', 'Stays', 1], ['img/rajasthan.jpg', 'Desert fort, Jaisalmer', 'Heritage', 2],
+    ['img/hero-sunset.png', 'Cliffside resort at sunset', 'Stays', 1], ['img/goa.jpg', 'Palm beach, South Goa', 'Beaches', 1],
+    ['img/himachal.jpg', 'Snow peaks, Manali', 'Mountains', 1], ['img/driver.jpg', 'Our verified chauffeurs', 'Services', 1],
+    ['img/tour.jpg', 'Top of the valley', 'Mountains', 2], ['img/hotel.jpg', 'Lagoon resort', 'Stays', 1],
+    ['img/maldives.jpg', 'Turquoise lagoon', 'Beaches', 1], ['img/why.jpg', 'Waterfront cottages', 'Stays', 1]
   ].map(([src, title, cat, rows]) => ({ src, title, cat, rows }));
   componentDidMount() {
     this.k = e => { if (this.state.idx < 0) return; if (e.key === 'Escape') this.setState({ idx: -1 }); if (e.key === 'ArrowRight') this.step(1); if (e.key === 'ArrowLeft') this.step(-1); };
